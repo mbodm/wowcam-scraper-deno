@@ -1,0 +1,48 @@
+services:
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scraper
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      - BASE_URL=https://wowcam.mbodm.com
+    volumes:
+      - /var/www/html/downloads:/downloads
+    networks:
+      - my-proxy-net
+      - my-backend-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wowcam.rule=Host(`wowcam.mbodm.com`)"
+      - "traefik.http.routers.wowcam.entrypoints=websecure"
+      - "traefik.http.routers.wowcam.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.wowcam.middlewares=wowcam-hsts"
+      - "traefik.http.services.wowcam.loadbalancer.server.port=8000"
+      - "traefik.http.middlewares.wowcam-hsts.headers.stsSeconds=31536000"
+      - "traefik.docker.network=traefik-proxy"
+
+  flaresolverr:
+    image: flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    expose:
+      - "8191"
+    environment:
+      - LOG_LEVEL=info
+    networks:
+      - my-backend-net
+
+networks:
+  my-proxy-net:
+    name: traefik-proxy
+    external: true
+  my-backend-net:
+    driver: bridge
