@@ -1,9 +1,4 @@
-import {
-  handleDownloadEndpoint,
-  handleFilesEndpoint,
-  handleRootEndpoint,
-  handleScrapeEndpoint,
-} from "./routes.ts";
+import { handleDownloadEndpoint, handleFilesEndpoint, handleRootEndpoint, handleScrapeEndpoint } from "./routes.ts";
 
 /**
  * This function starts a Deno HTTP server which exposes some API endpoints
@@ -23,8 +18,19 @@ export function startServer(port: number): Deno.HttpServer {
           headers: { "Allow": "GET" },
         });
       }
-      // Deno's Request.url is already an absolute URL (unlike node:http, where req.url
-      // is only the path and needs a manually configured base URL to parse safely)
+
+      try {
+
+      }
+      catch {
+        return new Response("Error: HTTP method not allowed", {
+          status: 405,
+          headers: { "Allow": "GET" },
+        });
+      }
+
+
+      // URL (for pathname and query params)
       const url = new URL(req.url);
       // Routes (call appropriate handler)
       switch (url.pathname) {
