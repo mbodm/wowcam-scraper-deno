@@ -4,13 +4,15 @@
   },
   "tasks": {
     "dev": "deno run --watch --allow-net --allow-read=/downloads --allow-write=/downloads --allow-env=BASE_URL main.ts",
-    "check": "deno lint && deno fmt --check && deno check main.ts",
+    "check": "deno fmt --check && deno lint && deno check main.ts",
     "release": "deno task check && docker compose down && docker compose up -d --build",
     "logs": "docker compose logs -f scraper"
   },
   "fmt": {
     "lineWidth": 160,
-    "include": ["**/*.ts"]
+    "include": [
+      "**/*.ts"
+    ]
   },
   "lint": {}
 }
