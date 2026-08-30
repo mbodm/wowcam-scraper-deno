@@ -27,7 +27,7 @@ type FlareSolverrResponse = {
 };
 
 /**
- * This function scrapes a Curse addon site (by using FlareSolverr) and returns the site's HTML content and the scraper's request headers
+ * Scrapes a Curse addon site (via FlareSolverr) and returns the site's HTML content and the scraper's request headers.
  */
 export async function scrapeAddonSite(addonSlug: string): Promise<ScrapeResult> {
   const flareSolverrUrl = "http://flaresolverr:8191/v1";

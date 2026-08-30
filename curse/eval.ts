@@ -1,5 +1,5 @@
 /**
- * This function evaluates a Curse addon site's content and returns the addon download URL as a string
+ * Evaluates a Curse addon site's content and returns the addon download URL as a string.
  */
 export function extractDownloadUrl(siteContent: string): string {
   const projectId = parse(siteContent, "project");

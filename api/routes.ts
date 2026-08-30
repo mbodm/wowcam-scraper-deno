@@ -18,14 +18,14 @@ const STATUS_TEXT: Record<number, string> = {
 };
 
 /**
- * This function handles the "/" endpoint
+ * Handles the "/" endpoint.
  */
 export function handleRootEndpoint(): Response {
   return new Response("hello", { status: 200 });
 }
 
 /**
- * This function handles the "/scrape" endpoint
+ * Handles the "/scrape" endpoint.
  */
 export async function handleScrapeEndpoint(url: URL): Promise<Response> {
   const addonSlug = url.searchParams.get("addon")?.trim().toLowerCase();
@@ -62,7 +62,7 @@ export async function handleScrapeEndpoint(url: URL): Promise<Response> {
 }
 
 /**
- * This function handles the "/download" endpoint
+ * Handles the "/download" endpoint.
  */
 export async function handleDownloadEndpoint(url: URL): Promise<Response> {
   const addonSlug = url.searchParams.get("addon")?.trim().toLowerCase();
@@ -94,7 +94,7 @@ export async function handleDownloadEndpoint(url: URL): Promise<Response> {
 }
 
 /**
- * This function handles the "/files/:filename" endpoint (serves ZIP files from the downloads folder)
+ * Handles the "/files/:filename" endpoint (serves ZIP files from the downloads folder).
  */
 export async function handleFilesEndpoint(url: URL): Promise<Response> {
   const requestedName = decodeURIComponent(url.pathname.replace("/files/", ""));

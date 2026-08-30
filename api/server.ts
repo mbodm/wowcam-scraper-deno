@@ -1,7 +1,7 @@
 import { handleDownloadEndpoint, handleFilesEndpoint, handleRootEndpoint, handleScrapeEndpoint } from "./routes.ts";
 
 /**
- * This function starts a Deno HTTP server which exposes some API endpoints
+ * Starts a Deno HTTP server which exposes the API endpoints.
  */
 export function startServer(port: number): Deno.HttpServer {
   return Deno.serve(

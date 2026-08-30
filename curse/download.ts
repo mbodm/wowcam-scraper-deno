@@ -11,7 +11,7 @@ export type DownloadResult = {
 };
 
 /**
- * This function downloads an addon ZIP file, by reusing the existing scrape flow
+ * Downloads an addon ZIP file, by reusing the existing scrape flow
  * (FlareSolverr for the Cloudflare-protected addon page) to resolve the final CDN URL,
  * and then downloading the ZIP file itself via a plain fetch() call. The new file is
  * written atomically (temp file + rename), and any previously saved ZIP file for the

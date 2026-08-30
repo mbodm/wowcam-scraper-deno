@@ -2,7 +2,7 @@ import type { SiteHeaders } from "./scrape.ts";
 import { UpstreamError } from "./error.ts";
 
 /**
- * This function follows all redirects of the scraped Curse addon download URL and returns the final "real" ZIP file download URL
+ * Follows all redirects of the scraped Curse addon download URL and returns the final "real" ZIP file download URL.
  */
 export async function getFinalDownloadUrl(scrapedDownloadUrl: string, scrapedSiteHeaders: SiteHeaders): Promise<string> {
   const headers = {
