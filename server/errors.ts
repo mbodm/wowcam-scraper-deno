@@ -10,11 +10,11 @@ export class UpstreamError extends Error {
 }
 
 /**
- * Custom error class for routing failures that should map to a specific HTTP response status.
+ * Custom error class for route handler failures that should map to a specific response status.
  */
-export class RouteError extends Error {
+export class StatusError extends Error {
   constructor(readonly status: number, message: string, options?: ErrorOptions) {
     super(message, options);
-    this.name = "RouteError";
+    this.name = "StatusError";
   }
 }

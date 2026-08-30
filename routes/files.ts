@@ -1,4 +1,4 @@
-import { RouteError } from "@/server/errors.ts";
+import { StatusError } from "@/server/errors.ts";
 
 /**
  * Handles the "/files/:filename" endpoint (serves ZIP files from the downloads folder).
@@ -9,7 +9,7 @@ export async function handleFilesEndpoint(url: URL): Promise<Response> {
     !requestedName || requestedName.includes("/") ||
     requestedName.includes("..")
   ) {
-    throw new RouteError(400, "Invalid file name in request URL.");
+    throw new StatusError(400, "Invalid file name in request URL.");
   }
   const filePath = `/downloads/${requestedName}`;
   let stats: Deno.FileInfo;
@@ -19,7 +19,7 @@ export async function handleFilesEndpoint(url: URL): Promise<Response> {
     file = await Deno.open(filePath, { read: true });
   } catch (err) {
     if (err instanceof Deno.errors.NotFound) {
-      throw new RouteError(404, "File not found.");
+      throw new StatusError(404, "File not found.");
     }
     throw err;
   }

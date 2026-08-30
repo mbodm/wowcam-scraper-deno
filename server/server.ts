@@ -1,9 +1,9 @@
-import { RouteError, UpstreamError } from "./errors.ts";
-import { createJsonResponse, createPrettyStatus } from "./responses.ts";
-import { handleDownloadEndpoint } from "@/routes/download.ts";
-import { handleFilesEndpoint } from "@/routes/files.ts";
 import { handleRootEndpoint } from "@/routes/root.ts";
 import { handleScrapeEndpoint } from "@/routes/scrape.ts";
+import { handleDownloadEndpoint } from "@/routes/download.ts";
+import { handleFilesEndpoint } from "@/routes/files.ts";
+import { StatusError, UpstreamError } from "@/server/errors.ts";
+import { createJsonResponse } from "@/server/response.ts";
 
 /**
  * Starts a Deno HTTP server which exposes the API endpoints.
@@ -36,25 +36,18 @@ export function startServer(port: number): Deno.HttpServer {
           if (url.pathname.startsWith("/files/")) {
             return await handleFilesEndpoint(url);
           }
-          // Matches "/favicon.ico" route too
+          // Route not found (matches "/favicon.ico" route too)
           return new Response(null, { status: 404 });
       }
     } catch (err) {
-      if (err instanceof UpstreamError) {
-        return createErrorResponse(502, err.message);
+      if (err instanceof StatusError) {
+        return createJsonResponse(err.status, { errorMessage: err.message });
       }
-      if (err instanceof RouteError) {
-        return createErrorResponse(err.status, err.message);
+      if (err instanceof UpstreamError) {
+        return createJsonResponse(502, { errorMessage: err.message });
       }
       console.error(`Unhandled error while processing ${req.method} ${req.url}:`, err);
-      return createErrorResponse(500, "Unknown error occurred (check logs for details).");
+      return createJsonResponse(500, { errorMessage: "Unknown error occurred (check logs for details)." });
     }
-  });
-}
-
-function createErrorResponse(status: number, errorMessage: string): Response {
-  return createJsonResponse(status, {
-    errorMessage,
-    statusInfo: createPrettyStatus(status),
   });
 }
