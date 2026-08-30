@@ -1,8 +1,8 @@
-import { scrapeAddonSite } from "../curse/scrape.ts";
-import { extractDownloadUrl } from "../curse/eval.ts";
-import { getFinalDownloadUrl } from "../curse/redirects.ts";
-import { downloadAddonZip } from "../curse/download.ts";
-import { UpstreamError } from "../curse/error.ts";
+import { scrapeAddonSite } from "@/curse/scrape.ts";
+import { extractDownloadUrl } from "@/curse/eval.ts";
+import { getFinalDownloadUrl } from "@/curse/redirects.ts";
+import { downloadAddonZip } from "@/curse/download.ts";
+import { UpstreamError } from "@/curse/error.ts";
 
 const downloadsDir = "/downloads";
 

@@ -1,4 +1,4 @@
-import { startServer } from "./src/api/server.ts";
+import { startServer } from "@/api/server.ts";
 
 const server = startServer(8000);
 

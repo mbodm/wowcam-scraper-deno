@@ -20,15 +20,12 @@ export function startServer(port: number): Deno.HttpServer {
       }
 
       try {
-
-      }
-      catch {
+      } catch {
         return new Response("Error: HTTP method not allowed", {
           status: 405,
           headers: { "Allow": "GET" },
         });
       }
-
 
       // URL (for pathname and query params)
       const url = new URL(req.url);

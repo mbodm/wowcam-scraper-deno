@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY deno.json .
 COPY main.ts .
-COPY src ./src
+COPY api ./api
+COPY curse ./curse
 
 USER deno
 EXPOSE 8000
