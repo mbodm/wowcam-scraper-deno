@@ -11,18 +11,17 @@ Deno.addSignalListener("SIGINT", onSigint);
 async function exitGracefully(signal: string): Promise<void> {
   console.log(`Closing server now, because a ${signal} signal was received.`);
   // Force exit if server.shutdown() hangs
-  const forceExitTimer = setTimeout(() => {
+  const id = setTimeout(() => {
     console.error("Forcing exit, because a timeout occurred while closing the server.");
     Deno.exit(1);
   }, 10 * 1000);
   try {
     await server.shutdown();
-    clearTimeout(forceExitTimer);
+    clearTimeout(id);
     Deno.removeSignalListener("SIGTERM", onSigterm);
     Deno.removeSignalListener("SIGINT", onSigint);
     console.log("Server successfully closed.");
   } catch (err) {
-    clearTimeout(forceExitTimer);
     console.error("Forcing exit, because an error occurred while closing the server:", err);
     Deno.exit(1);
   }
