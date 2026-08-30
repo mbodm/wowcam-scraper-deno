@@ -1,4 +1,4 @@
-import { UpstreamError } from "./error.ts";
+import { UpstreamError } from "@/api/errors.ts";
 
 export type SiteHeaders = {
   userAgent: string;
