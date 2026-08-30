@@ -16,7 +16,7 @@ export type DownloadResult = {
  * and then downloading the ZIP file itself via a plain fetch() call. The new file is
  * written atomically (temp file + rename), and any previously saved ZIP file for the
  * same addon slug is only deleted after the new one is fully in place, so a client
- * requesting the file mid-refresh always sees either the old or the new complete file
+ * requesting the file mid-refresh always sees either the old or the new complete file.
  */
 export async function downloadAddonZip(addonSlug: string): Promise<DownloadResult> {
   const scrapeResult = await scrapeAddonSite(addonSlug);
