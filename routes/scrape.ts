@@ -1,7 +1,7 @@
+import { StatusError } from "@/server/errors.ts";
 import { scrapeAddonSite } from "@/curse/scrape.ts";
 import { extractDownloadUrl } from "@/curse/eval.ts";
 import { getFinalDownloadUrl } from "@/curse/redirects.ts";
-import { StatusError } from "@/server/errors.ts";
 import { createJsonResponse } from "@/server/response.ts";
 
 /**
