@@ -1,7 +1,7 @@
 import { scrapeAddonSite } from "./scrape.ts";
 import { extractDownloadUrl } from "./eval.ts";
 import { getFinalDownloadUrl } from "./redirects.ts";
-import { UpstreamError } from "@/api/errors.ts";
+import { UpstreamError } from "@/server/errors.ts";
 
 const downloadsFolder = "/downloads";
 

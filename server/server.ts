@@ -1,5 +1,9 @@
-import { StatusError, UpstreamError } from "./errors.ts";
-import { handleDownloadEndpoint, handleFilesEndpoint, handleRootEndpoint, handleScrapeEndpoint } from "./routes.ts";
+import { RouteError, UpstreamError } from "./errors.ts";
+import { createJsonResponse, createPrettyStatus } from "./responses.ts";
+import { handleDownloadEndpoint } from "@/routes/download.ts";
+import { handleFilesEndpoint } from "@/routes/files.ts";
+import { handleRootEndpoint } from "@/routes/root.ts";
+import { handleScrapeEndpoint } from "@/routes/scrape.ts";
 
 /**
  * Starts a Deno HTTP server which exposes the API endpoints.
@@ -33,18 +37,24 @@ export function startServer(port: number): Deno.HttpServer {
             return await handleFilesEndpoint(url);
           }
           // Matches "/favicon.ico" route too
-
           return new Response(null, { status: 404 });
       }
     } catch (err) {
       if (err instanceof UpstreamError) {
-        return new Response(err.message, { status: 502 });
+        return createErrorResponse(502, err.message);
       }
-      if (err instanceof StatusError) {
-        return new Response(err.message, { status: err.status });
+      if (err instanceof RouteError) {
+        return createErrorResponse(err.status, err.message);
       }
       console.error(`Unhandled error while processing ${req.method} ${req.url}:`, err);
-      return new Response("Internal Server Error (check logs for details)", { status: 500 });
+      return createErrorResponse(500, "Unknown error occurred (check logs for details).");
     }
+  });
+}
+
+function createErrorResponse(status: number, errorMessage: string): Response {
+  return createJsonResponse(status, {
+    errorMessage,
+    statusInfo: createPrettyStatus(status),
   });
 }

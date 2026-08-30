@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY deno.json .
 COPY main.ts .
-COPY api ./api
+COPY server ./server
+COPY routes ./routes
 COPY curse ./curse
 
 USER deno

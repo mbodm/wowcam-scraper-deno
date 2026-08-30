@@ -1,5 +1,5 @@
 import type { SiteHeaders } from "@/curse/scrape.ts";
-import { UpstreamError } from "@/api/errors.ts";
+import { UpstreamError } from "@/server/errors.ts";
 
 /**
  * Follows all redirects of the scraped Curse addon download URL and returns the final "real" ZIP file download URL.
