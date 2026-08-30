@@ -25,7 +25,7 @@ export async function getFinalDownloadUrl(scrapedDownloadUrl: string, scrapedSit
   const finalDownloadUrl = response.url.trim();
   const contentType = response.headers.get("content-type") ?? "";
   if (!finalDownloadUrl.toLowerCase().endsWith(".zip") && !contentType.toLowerCase().includes("zip")) {
-    throw new UpstreamError("Redirects: It seems the final download URL is not a ZIP file.");
+    throw new Error("Redirects: It seems the final download URL is not a ZIP file.");
   }
   return finalDownloadUrl;
 }

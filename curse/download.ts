@@ -46,7 +46,7 @@ function buildFileName(addonSlug: string, url: string): string {
   const pathname = new URL(url).pathname;
   const originalFileName = pathname.split("/").pop();
   if (!originalFileName || !originalFileName.toLowerCase().endsWith(".zip")) {
-    throw new UpstreamError("Download: Could not determine a valid ZIP file name from the final download URL.");
+    throw new Error("Download: Could not determine a valid ZIP file name from the final download URL.");
   }
   return `${addonSlug}_${originalFileName}`;
 }
@@ -54,7 +54,7 @@ function buildFileName(addonSlug: string, url: string): string {
 async function saveZipFile(addonSlug: string, fileName: string, zipBytes: Uint8Array): Promise<void> {
   // Sanity check if this actually looks like a ZIP file ("PK" magic bytes)
   if (zipBytes.length < 4 || zipBytes[0] !== 0x50 || zipBytes[1] !== 0x4b) {
-    throw new UpstreamError("Download: The downloaded content does not look like a ZIP file (missing 'PK' signature).");
+    throw new Error("Download: The downloaded content does not look like a ZIP file (missing 'PK' signature).");
   }
   await Deno.mkdir(downloadsFolder, { recursive: true });
   const finalPath = `${downloadsFolder}/${fileName}`;

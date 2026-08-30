@@ -114,7 +114,7 @@ export async function scrapeAddonSite(addonSlug: string): Promise<ScrapeResult> 
 
 function validateFlareSolverrResponseObject(obj: FlareSolverrResponse): void {
   if (!obj) {
-    throw new UpstreamError("Scrape: The received response object, from internal FlareSolverr API, was null or undefined.");
+    throw new Error("Scrape: The received response object, from internal FlareSolverr API, was null or undefined.");
   }
   if (!obj.status) {
     throw new UpstreamError("Scrape: The received 'status', from internal FlareSolverr API, was null, undefined, or an empty string.");
@@ -157,7 +157,7 @@ function getAddonSiteContent(obj: FlareSolverrResponse): string {
   }
   // 404 page detection
   if (siteContent.includes("NEXT_HTTP_ERROR_FALLBACK;404")) {
-    throw new UpstreamError("Scrape: Curse addon site does not exist for given addon name (internal FlareSolverr API received Curse 404 page).");
+    throw new Error("Scrape: Curse addon site does not exist for given addon name (internal FlareSolverr API received Curse 404 page).");
   }
   return siteContent;
 }
